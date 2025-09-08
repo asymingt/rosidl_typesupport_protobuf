@@ -1,4 +1,5 @@
-# Copyright 2016-2018 Open Source Robotics Foundation, Inc.
+
+# Copyright 2025 Open Source Robotics Foundation, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,12 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from rosidl_pycommon import generate_files
-
-
-def generate_typesupport_protobuf_c(generator_arguments_file):
-    mapping = {
-        'idl__rosidl_typesupport_protobuf_c.hpp.em': '%s__rosidl_typesupport_protobuf_c.hpp',
-        'idl__type_support.cpp.em': '%s__rosidl_typesupport_protobuf_c.cpp',
-    }
-    generate_files(generator_arguments_file, mapping)
+RosProtoInfo = provider(
+    "Encapsulates protobuf information generated for an underlying IDL.", 
+    fields = [
+        "protos",
+    ]
+)

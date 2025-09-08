@@ -22,7 +22,9 @@ project(rosidl_typesupport_protobuf)
 
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
-find_package(rosidl_generator_c REQUIRED)
+find_package(rosidl_runtime_c REQUIRED)
+
+ament_export_dependencies(rosidl_runtime_c)
 
 ament_export_include_directories("include/${PROJECT_NAME}")
 
