@@ -18,16 +18,20 @@ load("@protobuf//bazel/private:cc_proto_support.bzl", "cc_proto_compile_and_link
 load("@rules_cc//cc:find_cc_toolchain.bzl", "use_cc_toolchain")
 load("@ros//:defs.bzl", "RosInterfaceInfo")
 load("@rosidl_adapter//:types.bzl", "RosIdlInfo")
-load("@rosidl_adapter//:tools.bzl", "message_info_from_target", "generate_sources")
+load("@rosidl_adapter//:tools.bzl", "generate_sources")
 load(":types.bzl", "RosProtoInfo")
 load(":tools.bzl", "merge_proto_infos")
 
 def _proto_aspect_impl(target, ctx):
-    package_name = ctx.label.repo_name.removesuffix("+")
-    message_type, message_name, message_code = message_info_from_target(ctx.label.name)
+    # Extract message metadata from the IdlInfo provider, where it was calculated.
+    package_name = target[RosIdlInfo].package_name
+    message_type = target[RosIdlInfo].interface_type
+    message_name = target[RosIdlInfo].interface_name
+    message_code = target[RosIdlInfo].interface_code
 
     # Generate the .proto file for the current mode.
     hdrs, srcs, proto_include_dir = generate_sources(
+        target = target,
         ctx = ctx,
         executable = ctx.executable._proto_generator,
         mnemonic = "IdlToProtobuf",

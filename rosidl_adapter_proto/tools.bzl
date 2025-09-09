@@ -48,9 +48,18 @@ def merge_proto_infos(ctx, name, deps, srcs = []):
     # requirement for the protobuf engine to function as expected.
     virtual_srcs = []
     for proto in proto_files:
-        normalized_path = proto.short_path.replace("..", "external")
-        src = ctx.actions.declare_file(
-            normalized_path.replace(proto.owner.workspace_root, proto_path))
+        # A universal way of getting pkg_type_name = sensor_msgs/msg/Image.proto that
+        # may work in other contexts, and not specifically for ROS protos.
+        prefix = ""
+        if proto.owner.workspace_root:
+            prefix += proto.owner.workspace_root + "/"
+        if proto.owner.package:
+            prefix += proto.owner.package + "/"
+        pkg_type_name = proto.short_path.replace("..", "external").removeprefix(prefix)
+
+        # Now create a symlink at <proto_path>/sensor_msgs/msg/Image.proto that points
+        # to the originally generated proto file from the other module.
+        src = ctx.actions.declare_file("{}/{}".format(proto_path, pkg_type_name))
         ctx.actions.symlink(output = src, target_file = proto)
         virtual_srcs.append(src)
 
@@ -61,7 +70,7 @@ def merge_proto_infos(ctx, name, deps, srcs = []):
         srcs = virtual_srcs,
         descriptor_set = descriptor_set, 
         workspace_root = ctx.label.workspace_root,
-        proto_path = proto_path, 
+        proto_path = ctx.label.package + "/" + proto_path if ctx.label.package else proto_path, 
         bin_dir = ctx.bin_dir.path,
         deps = [],
     )
