@@ -15,16 +15,7 @@
 # Package information
         
 module(
-    name = "rosidl_typesupport_protobuf_cpp",
+    name = "rosidl_typeadapter_protobuf_test",
     version = "0.0.1",
     compatibility_level = 0,
 )
-
-# Dependencies
-
-bazel_dep(name = "googletest", version = "1.17.0")
-bazel_dep(name = "rosidl_pycommon", version = "5.0.0")
-bazel_dep(name = "rosidl_runtime_cpp", version = "5.0.0")
-bazel_dep(name = "rosidl_typesupport_protobuf", version = "0.0.1")
-bazel_dep(name = "rules_cc", version = "0.2.4")
-bazel_dep(name = "rules_python", version = "1.6.1")
