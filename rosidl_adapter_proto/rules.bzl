@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@ros//:defs.bzl", "RosInterfaceInfo")
+load("@rosidl_cmake//:types.bzl", "RosInterfaceInfo")
 load("@rosidl_adapter//:aspects.bzl", "idl_aspect")
 load(":aspects.bzl", "proto_aspect")
 load(":types.bzl", "RosProtoInfo")
