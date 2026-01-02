@@ -1,4 +1,3 @@
-
 # Copyright 2025 Open Source Robotics Foundation, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,11 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-RosProtoInfo = provider(
-    "Encapsulates protobuf information generated for an underlying IDL.", 
+RosCcTypesupportProtobufInfo = provider(
+    "Encapsulates C++ type support information for Protocol Buffers.", 
     fields = [
-        "protos",
-        "proto_info",
-        "cc_info"
+        "cc_info",
+        "dynamic_libraries",
     ]
 )

@@ -87,6 +87,7 @@ static rosidl_service_type_support_t _@(service.namespaced_type.name)__handle = 
 }  // namespace @(ns)
 @[end for]@
 
+/*
 namespace rosidl_typesupport_protobuf
 {
 
@@ -99,6 +100,7 @@ get_service_type_support_handle<@(service_type)>()
 }
 
 }  // namespace rosidl_typesupport_protobuf
+*/
 
 #ifdef __cplusplus
 extern "C"
