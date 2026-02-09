@@ -38,12 +38,12 @@ def _rosidl_typesupport_protobuf_c_aspect_impl(target, ctx):
     )
 
     deps = [dep[CcInfo] for dep in ctx.attr._c_deps if CcInfo in dep]
-    for dep in ctx.rule.attr.deps:
-        if RosCTypesupportProtobufInfo in dep:
-            deps.append(dep[RosCTypesupportProtobufInfo].cc_info)
     deps.append(target[RosProtoInfo].cc_info)
     deps.append(target[RosCBindingsInfo].cc_info)
     deps.append(target[RosCcBindingsInfo].cc_info)
+    for dep in ctx.rule.attr.deps:
+        if RosCTypesupportProtobufInfo in dep:
+            deps.append(dep[RosCTypesupportProtobufInfo].cc_info)
 
     cc_info, dynamic_library = generate_compilation_information(
         ctx = ctx,
@@ -69,6 +69,7 @@ def _rosidl_typesupport_protobuf_c_aspect_impl(target, ctx):
                     if RosCTypesupportProtobufInfo in dep
                 ],
             ),
+            linker_inputs = cc_info.linking_context.linker_inputs
         ),
     ]
 
